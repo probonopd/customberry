@@ -1,0 +1,23 @@
+name: Setup on Raspberry Pi
+
+on:
+  push:
+    branches: main
+
+jobs:
+  armv7_job:
+    runs-on: ubuntu-latest
+    name: Test on armv7
+    steps:
+      - uses: actions/checkout@v2.1.0
+      - uses: uraimo/run-on-arch-action@v2.1.1
+        name: Install and run workoutizer
+        with:
+          arch: armv7
+          distro: bullseye
+          
+          install: |
+            uname -a
+            
+          run: |
+            uname -a
