@@ -22,6 +22,11 @@ jobs:
           run: |
             uname -a
             echo ::set-output name=uname::$(uname -a)
+            sudo apt-get -y install wget zip
+            DLD=$(wget -q "https://downloads.raspberrypi.org/raspios_arm64/images/?C=M;O=D" -O - | grep -o -e "raspios_arm64-.*/" | head -n 1 | cut -d "/" -f 1)
+            FILENAME=$(wget -q "https://downloads.raspberrypi.org/raspios_arm64/images/$DLD" -O - | grep -o -e "href.*zip<" | cut -d '"' -f 2)
+            wget -q "https://downloads.raspberrypi.org/raspios_arm64/images/$DLD/$FILENAME"
+            unzip $(basename "$FILENAME")
 
       - name: Get the output
         # Echo the `uname` output parameter from the `runcmd` step
