@@ -30,6 +30,7 @@ jobs:
             cd box86
             mkdir build; cd build; cmake .. -DRPI4ARM64=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo
             make -j2
+            make DESTDIR=box86 -j$(nproc) install ; find box86/
             ###
             DLD=$(wget -q "https://downloads.raspberrypi.org/raspios_arm64/images/?C=M;O=D" -O - | grep -o -e "raspios_arm64-.*/" | head -n 1 | cut -d "/" -f 1)
             FILENAME=$(wget -q "https://downloads.raspberrypi.org/raspios_arm64/images/$DLD" -O - | grep -o -e "href.*zip<" | cut -d '"' -f 2)
