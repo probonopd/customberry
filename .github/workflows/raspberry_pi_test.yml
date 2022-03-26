@@ -29,9 +29,10 @@ jobs:
             wget -q "https://downloads.raspberrypi.org/raspios_arm64/images/$DLD/$FILENAME"
             unzip $(basename "$FILENAME")
             ls
-            losetup -P /dev/loop0 *.img
-            mount /dev/loop0p2 /mnt
-            mount /dev/loop0p1 /mnt/boot
+            export LOOP="$(losetup -f -P --show *.img)"
+            echo $LOOP
+            mount $LOOPp2 /mnt
+            mount $LOOPp1 /mnt/boot
             mount
 
       - name: Get the output
